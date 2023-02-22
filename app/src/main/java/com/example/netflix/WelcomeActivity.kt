@@ -10,6 +10,7 @@ class WelcomeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
