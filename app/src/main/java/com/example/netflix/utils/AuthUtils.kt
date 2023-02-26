@@ -15,13 +15,19 @@ class AuthUtils {
         }
 
         /**
-         * Con una expresion regular predefinida de ``android.utils.Patters`` verifica si un
+         * Con una expresion regular predefinida de ``android.utils.Patters``, verifica si un
          * ``String`` tiene el formato correcto de un email.
          * */
         fun isValidEmail(email: String): Boolean{
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
 
+        /**
+         * Con una expresion regular, verifica si un ``String`` tiene el formato el
+         * siguiente formato:
+         * - Entre 6 y 60 caracteres.
+         * - Mínimo una letra y un número
+         * */
         fun isValidPassword(password: String): Boolean {
             return password.matches(
                 "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,60}\$".toRegex()

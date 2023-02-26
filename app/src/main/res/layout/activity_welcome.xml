@@ -140,7 +140,7 @@
         android:paddingEnd="50dp"
         android:text="Disfruta donde quieras. Cancela cuando quieras."
         android:textAlignment="center"
-        android:textColor="#8A8A8A"
+        android:textColor="@color/gray"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"

@@ -57,6 +57,8 @@ class RegisterActivity : AppCompatActivity() {
             val email = emailField.text.toString()
             val password = passwordField.text.toString()
 
+            var isWrong = false
+
             /* ************ */
             /* Email Policy */
             /* ************ */
@@ -67,6 +69,7 @@ class RegisterActivity : AppCompatActivity() {
             if (email.isEmpty() || email.isBlank()) {
                 emailField.setBackgroundResource(R.drawable.edit_text_error)
                 emailWarm.text = "El email es obligatorio."
+                isWrong = true
             }
 
             /*
@@ -76,6 +79,7 @@ class RegisterActivity : AppCompatActivity() {
             else if (!AuthUtils.hasLength(email)) {
                 emailField.setBackgroundResource(R.drawable.edit_text_error)
                 emailWarm.text = "El email debe de tener entre 5 y 50 caracteres."
+                isWrong = true
             }
 
             /*
@@ -85,6 +89,11 @@ class RegisterActivity : AppCompatActivity() {
             else if (!AuthUtils.isValidEmail(email)) {
                 emailField.setBackgroundResource(R.drawable.edit_text_error)
                 emailWarm.text = "Ingresa una dirección de email válida."
+                isWrong = true
+            }
+            else {
+                emailField.setBackgroundResource(R.drawable.edit_text_correct)
+                emailWarm.text = ""
             }
 
             /* *************** */
@@ -97,7 +106,7 @@ class RegisterActivity : AppCompatActivity() {
             if (password.isEmpty() || password.isBlank()) {
                 passwordField.setBackgroundResource(R.drawable.edit_text_error)
                 passwordWarm.text = "Contraseña obligatoria."
-                return@setOnClickListener
+                isWrong = true
             }
             /*
             * Avisa en caso de que la contraseña no cumpla con los requisitos.
@@ -107,10 +116,19 @@ class RegisterActivity : AppCompatActivity() {
                 passwordWarm.text = "La contraseña debe contener estos requisitos:\n" +
                         "Entre 6-60 caracteres\n" +
                         "Mínimo una letra y un número"
-                return@setOnClickListener
+                isWrong = true
+            }
+            else {
+                passwordField.setBackgroundResource(R.drawable.edit_text_correct)
+                passwordWarm.text = ""
             }
 
-            usersHelper.addUser(email, password)
+            /*
+            * Si existe un error en la validación, no continuara con el proceso
+            * */
+            if (isWrong) return@setOnClickListener
+
+            usersHelper.addUser(email, password) // Registra un nuevo usuario en la tabla
             finishGoTo(LoginActivity::class.java)
         }
 
@@ -118,6 +136,11 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
+    /**
+     * Encola el inicio de una actividad, y finaliza esta actividad.
+     *
+     * @param activityClass Clase de la nueva activiadad.
+     * */
     private fun finishGoTo(activityClass: Class<*>) {
         startActivity(
             Intent(this, activityClass)

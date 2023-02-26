@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Netflix</string>
-    <string name="check_email_long">
-        ¡Felicidades! Acabamos de enviarte un email a \. Revisa tu bandeja de entrada para obtener
-        más información. Como miebro de Netflix, puedes ver series y peliculas ilimitadas en la app
-        móvil y en todos tus demás dispositivos.
+    <string name="email_error_incorrect">
+        No podemos encontrar una cuenta con esta dirección de email.
+        \nReinténtalo o crea una cuenta nueva.
     </string>
 </resources>
