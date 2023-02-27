@@ -75,6 +75,9 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Abre un dialogo indicando que el email es incorrecto
+     * */
     private fun openIncorrectDialog() {
         AlertDialog.Builder(this)
             .setTitle("Email incorrecto")

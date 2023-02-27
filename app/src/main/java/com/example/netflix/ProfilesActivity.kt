@@ -13,7 +13,11 @@ class ProfilesActivity : AppCompatActivity() {
         binding = ActivityProfilesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var profilesComponents = arrayOf(binding.profileA, binding.profileB,
+        /*
+        * Asocia a cada imageView del array "profileComponents" una id de mipmap que pasaran
+        * a la siguiente actividad cuando sean pulsado.
+        * */
+        val profilesComponents = arrayOf(binding.profileA, binding.profileB,
             binding.profileC, binding.profileD)
         profilesComponents.forEach {
             val imageRes = when (it.id) {

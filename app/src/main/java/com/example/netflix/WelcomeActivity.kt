@@ -11,10 +11,12 @@ class WelcomeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /* ******************** */
+        /* Sección de listeners */
+        /* ******************** */
 
         binding.startNowButton.setOnClickListener {
             startActivity(Intent(this, StartNowActivity::class.java))
