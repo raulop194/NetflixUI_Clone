@@ -6,9 +6,14 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.netflix.model.UserRecord
-import java.math.BigInteger
-import java.security.MessageDigest
+import com.example.netflix.utils.AuthUtils.Companion.sha256
 
+/**
+ * Clase que proporciona ayuda a la hora de crear y establecer una conexion con un base de datos
+ * local de tipo ``SQLite``
+ *
+ * @author Raúl López-Bravo de Castro
+ * */
 class UsersHelper(context: Context): SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
 
     // Propiedades de la base de datos
@@ -21,26 +26,35 @@ class UsersHelper(context: Context): SQLiteOpenHelper(context, DATABASE, null, D
     }
 
     /**
-     * A partir de un String, encripta el mismo con el algoritmo __SHA-256__.
+     * Añade un nuevo usuario a la tabla ``user``.
+     *
+     * @param email Correo electronico del nuevo usuario. El campo es unico y no nulo.
+     *
+     * @param password Contraseña en crudo del nuevo usuario.
+     * Dentro esta se encripta en ``SHA-256``.
+     *
+     * @return En numero de registros (o filas) afectadas en la tabla. Devolvera -1 si hay un error.
      * */
-    private fun String.sha256(): String {
-        val md = MessageDigest.getInstance("SHA-256")
-        return BigInteger(1, md.digest(toByteArray()))
-            .toString(16)
-            .padStart(32, '0')
-    }
-
-    fun addUser(email: String, password: String) {
+    fun addUser(email: String, password: String): Long {
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(COL_EMAIL, email)
             put(COL_PASSWORD, password.sha256())
         }
 
-        db.insert(TABLE_USERS, null, values)
+        val result = db.insert(TABLE_USERS, null, values)
         db.close()
+
+        return result
     }
 
+    /**
+     * Obtiene un usuario de la tabla ``usuario`` que coincida con el email del usuario
+     * a consultar.
+     *
+     * @param email Email a buscar
+     * @return El usuario deseado. Retorna nulo en caso de que no exista el usuario.
+     * */
     @SuppressLint("Recycle", "Range")
     fun checkUserByEmail(email: String): UserRecord? {
         var userRecord: UserRecord? = null
